@@ -1,5 +1,5 @@
-import React from "react";
-import { useNavigate } from "react-router-dom";
+// LandingPage.jsx
+// Uso: <LandingPage onStart={() => { /* tu lógica para mostrar la app */ }} />
 
 const steps = [
   {
@@ -66,32 +66,23 @@ const techs = [
   "React",
 ];
 
-export default function LandingPage() {
-  // Instanciamos el hook de navegación
-  const navigate = useNavigate();
-
-  // Función que maneja el click y redirige a la ruta del traductor
-  const handleStart = () => {
-    navigate("/traductor");
-  };
-
+export default function LandingPage({ onStart }) {
   return (
     <div style={{ fontFamily: "sans-serif", maxWidth: 720, margin: "0 auto" }}>
+
       {/* Hero */}
       <div style={{ textAlign: "center", padding: "3.5rem 1.5rem 2.5rem" }}>
-        <span
-          style={{
-            display: "inline-block",
-            background: "#E6F1FB",
-            border: "0.5px solid #85B7EB",
-            borderRadius: 99,
-            fontSize: 12,
-            padding: "4px 14px",
-            color: "#185FA5",
-            marginBottom: "1.2rem",
-            letterSpacing: "0.03em",
-          }}
-        >
+        <span style={{
+          display: "inline-block",
+          background: "#E6F1FB",
+          border: "0.5px solid #85B7EB",
+          borderRadius: 99,
+          fontSize: 12,
+          padding: "4px 14px",
+          color: "#185FA5",
+          marginBottom: "1.2rem",
+          letterSpacing: "0.03em",
+        }}>
           Powered by TensorFlow
         </span>
         <h1 style={{ fontSize: 32, fontWeight: 500, lineHeight: 1.25, maxWidth: 560, margin: "0 auto 1rem" }}>
@@ -100,8 +91,7 @@ export default function LandingPage() {
         <p style={{ fontSize: 16, color: "#555", maxWidth: 460, margin: "0 auto 2rem", lineHeight: 1.7 }}>
           Usa tu cámara para comunicarte sin barreras. Nuestra IA reconoce señas al instante y las convierte en palabras habladas.
         </p>
-        {/* Pasamos la función de navegación al botón */}
-        <CtaButton onClick={handleStart}>Empezar ahora</CtaButton>
+        <CtaButton onClick={onStart}>Empezar ahora</CtaButton>
       </div>
 
       <Divider />
@@ -110,28 +100,19 @@ export default function LandingPage() {
       <Section label="Cómo funciona">
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(140px, 1fr))", gap: 12 }}>
           {steps.map((step) => (
-            <div
-              key={step.num}
-              style={{
-                background: "#F8FBFF",
-                border: "0.5px solid #B5D4F4",
-                borderRadius: 12,
-                padding: "1.2rem",
-              }}
-            >
+            <div key={step.num} style={{
+              background: "#F8FBFF",
+              border: "0.5px solid #B5D4F4",
+              borderRadius: 12,
+              padding: "1.2rem",
+            }}>
               <p style={{ fontSize: 11, fontWeight: 500, color: "#85B7EB", marginBottom: "0.7rem" }}>{step.num}</p>
-              <div
-                style={{
-                  width: 36,
-                  height: 36,
-                  borderRadius: 8,
-                  background: "#E6F1FB",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  marginBottom: "0.8rem",
-                }}
-              >
+              <div style={{
+                width: 36, height: 36, borderRadius: 8,
+                background: "#E6F1FB",
+                display: "flex", alignItems: "center", justifyContent: "center",
+                marginBottom: "0.8rem",
+              }}>
                 {step.icon}
               </div>
               <p style={{ fontSize: 14, fontWeight: 500, marginBottom: "0.4rem" }}>{step.title}</p>
@@ -145,27 +126,18 @@ export default function LandingPage() {
 
       {/* Demo del flujo */}
       <Section label="Demostración del flujo">
-        <div
-          style={{
-            background: "#F0F7FF",
-            border: "0.5px solid #B5D4F4",
-            borderRadius: 12,
-            padding: "1.5rem",
-          }}
-        >
+        <div style={{
+          background: "#F0F7FF",
+          border: "0.5px solid #B5D4F4",
+          borderRadius: 12,
+          padding: "1.5rem",
+        }}>
           <div style={{ display: "flex", gap: 10, alignItems: "center", flexWrap: "wrap" }}>
-            <div
-              style={{
-                background: "#fff",
-                border: "0.5px solid #B5D4F4",
-                borderRadius: 8,
-                padding: "8px 14px",
-                fontSize: 13,
-                display: "flex",
-                alignItems: "center",
-                gap: 8,
-              }}
-            >
+            <div style={{
+              background: "#fff", border: "0.5px solid #B5D4F4",
+              borderRadius: 8, padding: "8px 14px", fontSize: 13,
+              display: "flex", alignItems: "center", gap: 8,
+            }}>
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#185FA5" strokeWidth="2">
                 <path d="M18 8a6 6 0 0 0-12 0v4" />
                 <rect x="3" y="12" width="18" height="8" rx="2" />
@@ -173,20 +145,11 @@ export default function LandingPage() {
               Seña detectada: ✋ Hola
             </div>
             <span style={{ color: "#85B7EB", fontSize: 18 }}>→</span>
-            <div
-              style={{
-                background: "#E6F1FB",
-                border: "0.5px solid #85B7EB",
-                borderRadius: 8,
-                padding: "8px 14px",
-                fontSize: 13,
-                color: "#0C447C",
-                display: "flex",
-                alignItems: "center",
-                gap: 8,
-                flex: 1,
-              }}
-            >
+            <div style={{
+              background: "#E6F1FB", border: "0.5px solid #85B7EB",
+              borderRadius: 8, padding: "8px 14px", fontSize: 13,
+              color: "#0C447C", display: "flex", alignItems: "center", gap: 8, flex: 1,
+            }}>
               <PulseDot />
               Reproduciendo: "Hola"
             </div>
@@ -216,17 +179,10 @@ export default function LandingPage() {
       <Section label="Tecnologías">
         <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
           {techs.map((t) => (
-            <span
-              key={t}
-              style={{
-                background: "#E6F1FB",
-                border: "0.5px solid #B5D4F4",
-                borderRadius: 99,
-                fontSize: 12,
-                padding: "5px 12px",
-                color: "#185FA5",
-              }}
-            >
+            <span key={t} style={{
+              background: "#E6F1FB", border: "0.5px solid #B5D4F4",
+              borderRadius: 99, fontSize: 12, padding: "5px 12px", color: "#185FA5",
+            }}>
               {t}
             </span>
           ))}
@@ -235,49 +191,34 @@ export default function LandingPage() {
 
       {/* CTA final */}
       <div style={{ textAlign: "center", padding: "2.5rem 1.5rem 3rem" }}>
-        <CtaButton onClick={handleStart}>Ir al traductor →</CtaButton>
+        <CtaButton onClick={onStart}>Ir al traductor →</CtaButton>
         <p style={{ fontSize: 14, color: "#888", marginTop: "0.9rem" }}>No requiere cuenta ni registro</p>
       </div>
+
     </div>
   );
 }
 
-/* ── Componentes auxiliares (con tipado TypeScript) ── */
+/* ── Componentes auxiliares ── */
 
-interface CtaButtonProps {
-  onClick: () => void;
-  children: React.ReactNode;
-}
-
-function CtaButton({ onClick, children }: CtaButtonProps) {
+function CtaButton({ onClick, children }) {
   return (
     <button
-      onClick={onClick}
+      onClick={onClick} //Redirrige a la aplicación principal
       style={{
-        background: "#185FA5",
-        color: "#fff",
-        border: "none",
-        borderRadius: 12,
-        padding: "12px 28px",
-        fontSize: 15,
-        fontWeight: 500,
-        cursor: "pointer",
-        transition: "background 0.2s ease",
+        background: "#185FA5", color: "#fff", border: "none",
+        borderRadius: 12, padding: "12px 28px",
+        fontSize: 15, fontWeight: 500, cursor: "pointer",
       }}
-      onMouseEnter={(e) => (e.currentTarget.style.background = "#0C447C")}
-      onMouseLeave={(e) => (e.currentTarget.style.background = "#185FA5")}
+      onMouseEnter={e => (e.currentTarget.style.background = "#0C447C")}
+      onMouseLeave={e => (e.currentTarget.style.background = "#185FA5")}
     >
       {children}
     </button>
   );
 }
 
-interface SectionProps {
-  label: string;
-  children: React.ReactNode;
-}
-
-function Section({ label, children }: SectionProps) {
+function Section({ label, children }) {
   return (
     <div style={{ padding: "2.5rem 1.5rem" }}>
       <p style={{ fontSize: 11, textTransform: "uppercase", letterSpacing: "0.1em", color: "#aaa", marginBottom: "1.2rem" }}>
@@ -296,16 +237,11 @@ function PulseDot() {
   return (
     <>
       <style>{`@keyframes aura-pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.4;transform:scale(.65)} }`}</style>
-      <div
-        style={{
-          width: 8,
-          height: 8,
-          borderRadius: "50%",
-          background: "#185FA5",
-          flexShrink: 0,
-          animation: "aura-pulse 1.5s ease-in-out infinite",
-        }}
-      />
+      <div style={{
+        width: 8, height: 8, borderRadius: "50%",
+        background: "#185FA5", flexShrink: 0,
+        animation: "aura-pulse 1.5s ease-in-out infinite",
+      }} />
     </>
   );
 }

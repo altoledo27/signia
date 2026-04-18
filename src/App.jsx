@@ -1,14 +1,11 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import LandingPage from "./pages/LandingPage"; // Asegúrate de que la ruta del archivo sea correcta
-import AuraSystem from "./pages/AuraSystem";   // El componente donde está la IA y la cámara
+import { useState } from "react";
+import LandingPage from "./LandingPage";
+import Translator from "./Translator";
 
 export default function App() {
-  return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<LandingPage />} />
-        <Route path="/traductor" element={<AuraSystem />} />
-      </Routes>
-    </BrowserRouter>
-  );
+  const [started, setStarted] = useState(false);
+
+  return started
+    ? <Translator />
+    : <LandingPage onStart={() => setStarted(true)} />;
 }

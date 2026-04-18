@@ -1,14 +1,44 @@
 import { useEffect, useRef, useState } from "react";
 import * as tmImage from "@teachablemachine/image";
 
-export default function App() {
+export default function Translator({ onBack }) {
   const videoRef = useRef(null);
+  const streamRef = useRef(null);
+
+  const lastSpokenRef = useRef("");
+  const lastTimeRef = useRef(0);
+  const speakingRef = useRef(false);
 
   const [text, setText] = useState("Cargando IA...");
   const [confidence, setConfidence] = useState(0);
   const [history, setHistory] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [lastWord, setLastWord] = useState("");
+
+  async function speakEleven(word) {
+  try {
+    const response = await fetch("http://localhost:3001/speak", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ text: word }),
+    });
+
+    if (!response.ok) return;
+
+    const blob = await response.blob();
+    const url = URL.createObjectURL(blob);
+
+    const audio = new Audio(url);
+    audio.play();
+
+    audio.onended = () => {
+      URL.revokeObjectURL(url);
+    };
+  } catch (error) {
+    console.log(error);
+  }
+}
 
   useEffect(() => {
     let model;
@@ -22,12 +52,20 @@ export default function App() {
 
       const stream = await navigator.mediaDevices.getUserMedia({
         video: true,
+        audio: false,
       });
 
-      videoRef.current.srcObject = stream;
+      streamRef.current = stream;
+
+      if (videoRef.current) {
+        videoRef.current.srcObject = stream;
+      }
+
       setLoading(false);
 
       interval = setInterval(async () => {
+        if (!videoRef.current) return;
+
         const prediction = await model.predict(videoRef.current);
 
         const best = prediction.reduce((a, b) =>
@@ -40,13 +78,21 @@ export default function App() {
           setText(best.className);
           setConfidence(prob);
 
-          if (best.className !== lastWord) {
-            setLastWord(best.className);
+          const now = Date.now();
+
+          if (
+            best.className !== lastSpokenRef.current &&
+            now - lastTimeRef.current > 2500
+          ) {
+            lastSpokenRef.current = best.className;
+            lastTimeRef.current = now;
 
             setHistory((prev) => [
               best.className,
               ...prev.slice(0, 4),
             ]);
+
+            speakEleven(best.className);
           }
         }
       }, 350);
@@ -54,41 +100,96 @@ export default function App() {
 
     start();
 
-    return () => clearInterval(interval);
-  }, [lastWord]);
+    return () => {
+      clearInterval(interval);
+
+      if (streamRef.current) {
+        streamRef.current
+          .getTracks()
+          .forEach((track) => track.stop());
+
+        streamRef.current = null;
+      }
+
+      if (videoRef.current) {
+        videoRef.current.srcObject = null;
+      }
+    };
+  }, []);
 
   return (
     <div
       style={{
-        background: "#050505",
-        color: "white",
         minHeight: "100vh",
-        padding: "30px",
-        fontFamily: "Arial",
+        background:
+          "radial-gradient(circle at top right, #111827 0%, #050505 45%, #000000 100%)",
+        color: "white",
+        padding: "28px",
+        fontFamily: "Inter, sans-serif",
       }}
     >
-      <h1 style={{ fontSize: "52px", marginBottom: "10px" }}>
-        Aura AI
-      </h1>
+      {/* Header */}
+      <div
+        style={{
+          position: "relative",
+          textAlign: "center",
+          marginBottom: "28px",
+        }}
+      >
+        <button
+          onClick={onBack}
+          style={{
+            position: "absolute",
+            left: 0,
+            top: 0,
+            background: "#111",
+            color: "#fff",
+            border: "1px solid #222",
+            padding: "12px 18px",
+            borderRadius: "14px",
+            cursor: "pointer",
+            fontWeight: 600,
+          }}
+        >
+          ← Regresar
+        </button>
 
-      <p style={{ color: "#888", marginBottom: "30px" }}>
-        Traductor Inteligente de Lengua de Señas
-      </p>
+        <h1
+          style={{
+            fontSize: "clamp(2rem,5vw,3.5rem)",
+            margin: 0,
+            fontWeight: 700,
+          }}
+        >
+          SIGNIA
+        </h1>
 
+        <p
+          style={{
+            color: "#9ca3af",
+            marginTop: "20px",
+            fontSize: "15px",
+          }}
+        >
+          Traductor Inteligente de Lengua de Señas
+        </p>
+      </div>
+
+      {/* Layout */}
       <div
         style={{
           display: "grid",
           gridTemplateColumns: "2fr 1fr",
-          gap: "20px",
+          gap: "22px",
         }}
       >
         {/* Cámara */}
         <div
           style={{
             background: "#111",
-            borderRadius: "24px",
-            padding: "15px",
-            boxShadow: "0 0 20px rgba(0,255,255,.15)",
+            borderRadius: "26px",
+            padding: "16px",
+            border: "1px solid #222",
           }}
         >
           <video
@@ -99,32 +200,31 @@ export default function App() {
             width="100%"
             style={{
               borderRadius: "18px",
+              width: "100%",
+              minHeight: "520px",
+              objectFit: "cover",
+              background: "#000",
             }}
           />
         </div>
 
-        {/* Panel lateral */}
+        {/* Panel */}
         <div
           style={{
             display: "flex",
             flexDirection: "column",
-            gap: "20px",
+            gap: "18px",
           }}
         >
-          {/* Resultado */}
-          <div
-            style={{
-              background: "#111",
-              padding: "20px",
-              borderRadius: "24px",
-            }}
-          >
-            <p style={{ color: "#777" }}>Detectado</p>
+          <Card>
+            <p style={{ color: "#6b7280", margin: 0 }}>
+              Detectado
+            </p>
 
             <h2
               style={{
                 fontSize: "42px",
-                color: "#00ffff",
+                color: "#4DA3FF",
                 margin: "10px 0",
               }}
             >
@@ -132,24 +232,19 @@ export default function App() {
             </h2>
 
             <p>{confidence}% confianza</p>
-          </div>
+          </Card>
 
-          {/* Historial */}
-          <div
-            style={{
-              background: "#111",
-              padding: "20px",
-              borderRadius: "24px",
-            }}
-          >
-            <p style={{ color: "#777" }}>Historial</p>
+          <Card>
+            <p style={{ color: "#6b7280", marginTop: 0 }}>
+              Historial reciente
+            </p>
 
             {history.map((item, i) => (
               <div
                 key={i}
                 style={{
                   marginTop: "10px",
-                  padding: "10px",
+                  padding: "12px",
                   background: "#1a1a1a",
                   borderRadius: "12px",
                 }}
@@ -157,25 +252,34 @@ export default function App() {
                 {item}
               </div>
             ))}
-          </div>
+          </Card>
 
-          {/* Estado */}
-          <div
-            style={{
-              background: "#111",
-              padding: "20px",
-              borderRadius: "24px",
-            }}
-          >
-            <p style={{ color: "#00ff88" }}>
+          <Card>
+            <p style={{ color: "#22c55e", margin: 0 }}>
               ● Sistema Activo
             </p>
-            <p style={{ color: "#777", marginTop: "10px" }}>
-              Cámara + IA + Voz
+
+            <p style={{ color: "#9ca3af" }}>
+              Cámara + IA + Voz funcionando.
             </p>
-          </div>
+          </Card>
         </div>
       </div>
+    </div>
+  );
+}
+
+function Card({ children }) {
+  return (
+    <div
+      style={{
+        background: "#111",
+        padding: "22px",
+        borderRadius: "24px",
+        border: "1px solid #222",
+      }}
+    >
+      {children}
     </div>
   );
 }

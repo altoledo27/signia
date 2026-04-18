@@ -68,29 +68,57 @@ const techs = [
 
 export default function LandingPage({ onStart }) {
   return (
-    <div style={{ fontFamily: "sans-serif", maxWidth: 720, margin: "0 auto" }}>
-
+    <div
+      style={{
+        fontFamily: "Inter, sans-serif",
+        width: "100%",
+        minHeight: "100vh",
+        background:
+          "radial-gradient(circle at top right, #111827 0%, #050505 45%, #000000 100%)",
+        backgroundRepeat: "no-repeat",
+        backgroundSize: "cover",
+        backgroundAttachment: "fixed",
+        color: "white",
+        boxSizing: "border-box",
+      }}
+    >
+      <div
+      style={{
+        maxWidth: "2100px",
+        margin: "0 auto",
+        padding: "0 16px",
+      }}
+    >
       {/* Hero */}
-      <div style={{ textAlign: "center", padding: "3.5rem 1.5rem 2.5rem" }}>
-        <span style={{
-          display: "inline-block",
-          background: "#E6F1FB",
-          border: "0.5px solid #85B7EB",
-          borderRadius: 99,
-          fontSize: 12,
-          padding: "4px 14px",
-          color: "#185FA5",
-          marginBottom: "1.2rem",
-          letterSpacing: "0.03em",
-        }}>
-          Powered by TensorFlow
-        </span>
-        <h1 style={{ fontSize: 32, fontWeight: 500, lineHeight: 1.25, maxWidth: 560, margin: "0 auto 1rem" }}>
-          Traduce señas a voz en tiempo real
+      <div style={{ textAlign: "center", padding: "4.5rem 1.5rem 3rem" }}>
+        
+        <h1
+          style={{
+            fontSize: "clamp(2rem, 6vw, 4.2rem)",
+            fontWeight: 700,
+            lineHeight: 1.1,
+            maxWidth: "850px",
+            margin: "0 auto 1rem",
+            color: "#fff",
+          }}
+        >
+          Traduce señas a voz
+          <span style={{ color: "#4DA3FF" }}> en tiempo real</span>
         </h1>
-        <p style={{ fontSize: 16, color: "#555", maxWidth: 460, margin: "0 auto 2rem", lineHeight: 1.7 }}>
-          Usa tu cámara para comunicarte sin barreras. Nuestra IA reconoce señas al instante y las convierte en palabras habladas.
+
+        <p
+          style={{
+            fontSize: "clamp(1rem, 2vw, 1.2rem)",
+            color: "#cfcfcf",
+            maxWidth: "700px",
+            margin: "0 auto 2rem",
+            lineHeight: 1.8,
+          }}
+        >
+          Usa tu cámara para comunicarte sin barreras. Nuestra IA reconoce
+          señas al instante y las convierte en voz.
         </p>
+
         <CtaButton onClick={onStart}>Empezar ahora</CtaButton>
       </div>
 
@@ -98,25 +126,83 @@ export default function LandingPage({ onStart }) {
 
       {/* Cómo funciona */}
       <Section label="Cómo funciona">
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(140px, 1fr))", gap: 12 }}>
+        <div
+          style={{
+            display: "grid",
+            gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))",
+            gap: 20,
+            alignItems: "stretch",
+            justifyItems: "center",
+            textAlign: "center",
+          }}
+        >
           {steps.map((step) => (
-            <div key={step.num} style={{
-              background: "#F8FBFF",
-              border: "0.5px solid #B5D4F4",
-              borderRadius: 12,
-              padding: "1.2rem",
-            }}>
-              <p style={{ fontSize: 11, fontWeight: 500, color: "#85B7EB", marginBottom: "0.7rem" }}>{step.num}</p>
-              <div style={{
-                width: 36, height: 36, borderRadius: 8,
-                background: "#E6F1FB",
-                display: "flex", alignItems: "center", justifyContent: "center",
-                marginBottom: "0.8rem",
-              }}>
-                {step.icon}
-              </div>
-              <p style={{ fontSize: 14, fontWeight: 500, marginBottom: "0.4rem" }}>{step.title}</p>
-              <p style={{ fontSize: 13, color: "#666", lineHeight: 1.5 }}>{step.desc}</p>
+            <div
+              key={step.num}
+              style={{
+                background: "#111111",
+                border: "1px solid #222",
+                borderRadius: 18,
+                padding: "1.3rem",
+                boxShadow: "0 10px 30px rgba(0,0,0,.35)",
+              }}
+            >
+              <div
+          style={{
+            width: 42,
+            height: 42,
+            margin: "0 auto 1rem",
+            borderRadius: "50%",
+            background:
+              "linear-gradient(135deg, #4DA3FF 0%, #185FA5 100%)",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            color: "#fff",
+            fontWeight: 700,
+            fontSize: 14,
+            boxShadow: "0 8px 20px rgba(77,163,255,.25)",
+          }}
+        >
+          {step.num}
+        </div>
+
+        <div
+          style={{
+            width: 42,
+            height: 42,
+            borderRadius: 12,
+            background: "#1b2635",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            margin: "0 auto 1rem",
+          }}
+        >
+          {step.icon}
+        </div>
+
+        <p
+          style={{
+            fontSize: 16,
+            fontWeight: 700,
+            marginBottom: "0.6rem",
+            color: "#fff",
+          }}
+        >
+          {step.title}
+        </p>
+
+        <p
+          style={{
+            fontSize: 13,
+            color: "#a1a1aa",
+            lineHeight: 1.6,
+            margin: 0,
+          }}
+        >
+          {step.desc}
+        </p>
             </div>
           ))}
         </div>
@@ -124,32 +210,55 @@ export default function LandingPage({ onStart }) {
 
       <Divider />
 
-      {/* Demo del flujo */}
+      {/* Demo */}
       <Section label="Demostración del flujo">
-        <div style={{
-          background: "#F0F7FF",
-          border: "0.5px solid #B5D4F4",
-          borderRadius: 12,
-          padding: "1.5rem",
-        }}>
-          <div style={{ display: "flex", gap: 10, alignItems: "center", flexWrap: "wrap" }}>
-            <div style={{
-              background: "#fff", border: "0.5px solid #B5D4F4",
-              borderRadius: 8, padding: "8px 14px", fontSize: 13,
-              display: "flex", alignItems: "center", gap: 8,
-            }}>
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#185FA5" strokeWidth="2">
-                <path d="M18 8a6 6 0 0 0-12 0v4" />
-                <rect x="3" y="12" width="18" height="8" rx="2" />
-              </svg>
+        <div
+          style={{
+            background: "#111111",
+            border: "1px solid #222",
+            borderRadius: 14,
+            padding: "1.5rem",
+            maxWidth: "900px",
+            margin: "0 auto",
+          }}
+        >
+          <div
+            style={{
+              display: "flex",
+              gap: 10,
+              alignItems: "center",
+              justifyContent: "center",
+              flexWrap: "wrap",
+            }}
+          >
+            <div
+              style={{
+                background: "#181818",
+                border: "1px solid #2a2a2a",
+                borderRadius: 8,
+                padding: "8px 14px",
+                fontSize: 13,
+                color: "#fff",
+              }}
+            >
               Seña detectada: ✋ Hola
             </div>
-            <span style={{ color: "#85B7EB", fontSize: 18 }}>→</span>
-            <div style={{
-              background: "#E6F1FB", border: "0.5px solid #85B7EB",
-              borderRadius: 8, padding: "8px 14px", fontSize: 13,
-              color: "#0C447C", display: "flex", alignItems: "center", gap: 8, flex: 1,
-            }}>
+
+            <span style={{ color: "#4DA3FF", fontSize: 18 }}>→</span>
+
+            <div
+              style={{
+                background: "#0f2236",
+                border: "1px solid #24435f",
+                borderRadius: 8,
+                padding: "8px 14px",
+                fontSize: 13,
+                color: "#fff",
+                display: "flex",
+                alignItems: "center",
+                gap: 8,
+              }}
+            >
               <PulseDot />
               Reproduciendo: "Hola"
             </div>
@@ -161,12 +270,70 @@ export default function LandingPage({ onStart }) {
 
       {/* Características */}
       <Section label="Características">
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10 }}>
+        <div
+           style={{
+            display: "grid",
+            gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))",
+            gap: 18,
+            maxWidth: "950px",
+            margin: "0 auto",
+            alignItems: "stretch",
+            justifyItems: "center",
+          }}
+        >
           {features.map(([title, desc]) => (
-            <div key={title} style={{ display: "flex", gap: 10, alignItems: "flex-start" }}>
-              <div style={{ width: 6, height: 6, borderRadius: "50%", background: "#378ADD", marginTop: 7, flexShrink: 0 }} />
-              <p style={{ fontSize: 13, color: "#666", lineHeight: 1.5, margin: 0 }}>
-                <strong style={{ color: "#111", fontWeight: 500 }}>{title}</strong> — {desc}
+            <div
+            key={title}
+            style={{
+              background: "#111111",
+              border: "1px solid #222",
+              borderRadius: 18,
+              padding: "1.3rem",
+              width: "100%",
+              maxWidth: "260px",
+              textAlign: "center",
+              boxShadow: "0 10px 25px rgba(0,0,0,.28)",
+            }}
+          >
+              <div
+                style={{
+                  width: 42,
+                  height: 42,
+                  borderRadius: "50%",
+                  margin: "0 auto 1rem",
+                  background:
+                    "linear-gradient(135deg, #4DA3FF 0%, #185FA5 100%)",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  fontSize: 18,
+                  color: "#fff",
+                  fontWeight: 700,
+                }}
+              >
+                ✓
+              </div>
+
+              <p
+                style={{
+                  fontSize: 16,
+                  color: "#fff",
+                  fontWeight: 700,
+                  marginBottom: "0.45rem",
+                }}
+              >
+                {title}
+              </p>
+
+              <p
+                style={{
+                  fontSize: 14,
+                  color: "#a1a1aa",
+                  lineHeight: 1.6,
+                  margin: 0,
+                }}
+              >
+                {desc}
               </p>
             </div>
           ))}
@@ -175,43 +342,95 @@ export default function LandingPage({ onStart }) {
 
       <Divider />
 
-      {/* Tecnologías */}
-      <Section label="Tecnologías">
-        <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
-          {techs.map((t) => (
-            <span key={t} style={{
-              background: "#E6F1FB", border: "0.5px solid #B5D4F4",
-              borderRadius: 99, fontSize: 12, padding: "5px 12px", color: "#185FA5",
-            }}>
-              {t}
-            </span>
-          ))}
-        </div>
-      </Section>
+     {/* Tecnologías */}
+<Section label="Tecnologías">
+  <div
+    style={{
+      display: "flex",
+      gap: 12,
+      flexWrap: "wrap",
+      justifyContent: "center",
+      maxWidth: "900px",
+      margin: "0 auto",
+    }}
+  >
+    {techs.map((t) => (
+      <span
+        key={t}
+        style={{
+          background: "#111111",
+          border: "1px solid #222",
+          borderRadius: 999,
+          fontSize: 13,
+          padding: "10px 16px",
+          color: "#ffffff",
+          fontWeight: 500,
+          cursor: "pointer",
+          transition: "all .25s ease",
+        }}
+        onMouseEnter={(e) => {
+          e.currentTarget.style.border = "1px solid #4DA3FF";
+          e.currentTarget.style.boxShadow =
+            "0 0 0 1px rgba(77,163,255,.35), 0 0 18px rgba(77,163,255,.20)";
+          e.currentTarget.style.transform = "translateY(-2px)";
+        }}
+        onMouseLeave={(e) => {
+          e.currentTarget.style.border = "1px solid #222";
+          e.currentTarget.style.boxShadow = "none";
+          e.currentTarget.style.transform = "translateY(0)";
+        }}
+      >
+        {t}
+      </span>
+    ))}
+  </div>
+</Section>
 
       {/* CTA final */}
-      <div style={{ textAlign: "center", padding: "2.5rem 1.5rem 3rem" }}>
+      <div style={{ textAlign: "center", padding: "0rem 1.5rem 4rem" }}>
         <CtaButton onClick={onStart}>Ir al traductor →</CtaButton>
-        <p style={{ fontSize: 14, color: "#888", marginTop: "0.9rem" }}>No requiere cuenta ni registro</p>
-      </div>
 
+        <p
+          style={{
+            fontSize: 14,
+            color: "#888",
+            marginTop: "0.9rem",
+          }}
+        >
+          No requiere cuenta ni registro
+        </p>
+      </div>
+      </div>
     </div>
   );
 }
 
-/* ── Componentes auxiliares ── */
+/* COMPONENTES */
 
 function CtaButton({ onClick, children }) {
   return (
     <button
-      onClick={onClick} //Redirrige a la aplicación principal
+      onClick={onClick}
       style={{
-        background: "#185FA5", color: "#fff", border: "none",
-        borderRadius: 12, padding: "12px 28px",
-        fontSize: 15, fontWeight: 500, cursor: "pointer",
+        background: "#185FA5",
+        color: "#fff",
+        border: "none",
+        borderRadius: 14,
+        padding: "13px 28px",
+        fontSize: 15,
+        fontWeight: 600,
+        cursor: "pointer",
+        boxShadow: "0 10px 25px rgba(24,95,165,.20)",
+        transition: "all .2s ease",
       }}
-      onMouseEnter={e => (e.currentTarget.style.background = "#0C447C")}
-      onMouseLeave={e => (e.currentTarget.style.background = "#185FA5")}
+      onMouseEnter={(e) => {
+        e.currentTarget.style.background = "#0C447C";
+        e.currentTarget.style.transform = "translateY(-2px)";
+      }}
+      onMouseLeave={(e) => {
+        e.currentTarget.style.background = "#185FA5";
+        e.currentTarget.style.transform = "translateY(0)";
+      }}
     >
       {children}
     </button>
@@ -220,28 +439,59 @@ function CtaButton({ onClick, children }) {
 
 function Section({ label, children }) {
   return (
-    <div style={{ padding: "2.5rem 1.5rem" }}>
-      <p style={{ fontSize: 11, textTransform: "uppercase", letterSpacing: "0.1em", color: "#aaa", marginBottom: "1.2rem" }}>
+    <div style={{ padding: "3rem 0" }}>
+      <p
+        style={{
+          fontSize: "clamp(1.4rem, 3vw, 2.3rem)",
+          letterSpacing: "-0.03em",
+          color: "#ffffff",
+          marginBottom: "1.4rem",
+          fontWeight: 700,
+          textAlign: "center",
+        }}
+      >
         {label}
       </p>
+
       {children}
     </div>
   );
 }
 
+
+
 function Divider() {
-  return <hr style={{ border: "none", borderTop: "0.5px solid #e0e0e0", margin: "0 1.5rem" }} />;
+  return (
+    <hr
+      style={{
+        border: "none",
+        borderTop: "1px solid #1a1a1a",
+        margin: "0",
+      }}
+    />
+  );
 }
 
 function PulseDot() {
   return (
     <>
-      <style>{`@keyframes aura-pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.4;transform:scale(.65)} }`}</style>
-      <div style={{
-        width: 8, height: 8, borderRadius: "50%",
-        background: "#185FA5", flexShrink: 0,
-        animation: "aura-pulse 1.5s ease-in-out infinite",
-      }} />
+      <style>{`
+        @keyframes aura-pulse {
+          0%,100%{opacity:1;transform:scale(1)}
+          50%{opacity:.4;transform:scale(.65)}
+        }
+      `}</style>
+
+      <div
+        style={{
+          width: 8,
+          height: 8,
+          borderRadius: "50%",
+          background: "#185FA5",
+          flexShrink: 0,
+          animation: "aura-pulse 1.5s ease-in-out infinite",
+        }}
+      />
     </>
   );
 }

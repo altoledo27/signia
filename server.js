@@ -17,8 +17,6 @@ app.post("/speak", async (req, res) => {
   try {
     const { text } = req.body;
 
-    console.log("Texto:", text);
-
     const response = await fetch(
       "https://api.elevenlabs.io/v1/text-to-speech/rEVYTKPqwSMhytFPayIb",
       {
